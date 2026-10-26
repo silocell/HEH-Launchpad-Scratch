@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scratch Games</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%22%23f59e0b%22/%3E%3Cpath d=%22M20 22h24v20H20z%22 fill=%22%23fff%22/%3E%3Ccircle cx=%2227%22 cy=%2232%22 r=%223%22 fill=%22%23f59e0b%22/%3E%3Ccircle cx=%2237%22 cy=%2232%22 r=%223%22 fill=%22%23f59e0b%22/%3E%3C/svg%3E">
+<script>
+try{ var t = JSON.parse(localStorage.getItem("hl.theme")); if(t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t); }catch(e){}
+</script>
+<style>
+:root{ --bg:#f3f5fb; --card:#fff; --ink:#151a2d; --soft:#5b6380; --rule:#e2e6f2; --bar:#141a33; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --bg:#0e1120; --card:#171b2e; --ink:#e7eaf6; --soft:#9aa3c2; --rule:#272d47; --bar:#0a0d1a; } }
+:root[data-theme="dark"]{ --bg:#0e1120; --card:#171b2e; --ink:#e7eaf6; --soft:#9aa3c2; --rule:#272d47; --bar:#0a0d1a; }
+*{box-sizing:border-box} html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh}
+.top{background:var(--bar);color:#fff;display:flex;align-items:center;gap:12px;padding:12px 18px}
+.top b{font-size:1.15rem} .top .sp{flex:1} .top a{color:#c7cbe0;font-size:.85rem;text-decoration:none}
+.top a:hover{color:#fff}
+main{max-width:1000px;margin:0 auto;padding:22px 16px 60px}
+h1{margin:0 0 4px} .muted{color:var(--soft)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-top:22px}
+.game{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--rule);border-radius:16px;padding:16px;color:var(--ink);text-decoration:none;transition:transform .15s,border-color .15s}
+.game:hover{transform:translateY(-2px);border-color:#6366f1}
+.icon{width:56px;height:56px;border-radius:14px;display:grid;place-items:center;font-size:1.8rem;flex:none;color:#fff}
+.game b{display:block;font-size:1.08rem}
+.game p{margin:4px 0 6px;color:var(--soft);font-size:.9rem}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:999px;background:var(--rule);color:var(--soft)}
+footer{max-width:1000px;margin:0 auto;padding:0 16px 40px;color:var(--soft);font-size:.85rem}
+footer a{color:inherit}
+@media (prefers-reduced-motion: reduce){ .game{transition:none} .game:hover{transform:none} }
+</style>
+</head>
+<body>
+<div class="top"><b>🎮 Scratch Games</b><div class="sp"></div><a href="/HEH-Homework/games.html">← back to the Launchpad</a></div>
+<main>
+  <h1>Scratch Games</h1>
+  <p class="muted">Six games built in Scratch, packaged so they run in the browser with no Scratch account and nothing to install. Part of Homework Launchpad.</p>
+  <div class="grid" id="list"></div>
+</main>
+<footer>
+  <p>Made by Shiv. Licensed under the <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU GPL v3</a>.</p>
+</footer>
+<script>
+var GAMES = [
+  { icon:"🚗", bg:"linear-gradient(135deg,#16a34a,#166534)", name:"VroomZoom Car Simulator", url:"sg-vroom.html",
+    says:"A real circuit: three laps, hidden checkpoints, and the grass is slow. W or up to go, A/D or arrows to steer.", tags:["Race"] },
+  { icon:"🌀", bg:"linear-gradient(135deg,#7c3aed,#4c1d95)", name:"The Maze of Confusion", url:"sg-maze.html",
+    says:"Three freshly generated neon mazes, sixty seconds for the lot. Walls stop you — the clock beats you.", tags:["Puzzle"] },
+  { icon:"🦆", bg:"linear-gradient(135deg,#f59e0b,#b45309)", name:"Ducks Rampage", url:"sg-ducks.html",
+    says:"The ducks are on the rampage! Dodge the angry yellow ones, catch the silver ones. Three hearts.", tags:["Dodge"] },
+  { icon:"🍉", bg:"linear-gradient(135deg,#be123c,#7c3aed)", name:"Fruit Slash", url:"sg-fruit.html",
+    says:"Swipe to slice the fruit — but never the bomb. Three lives, and it speeds up as you score.", tags:["Fun"] },
+  { icon:"⚔️", bg:"linear-gradient(135deg,#059669,#1e2a6e)", name:"Gem Quest", url:"sg-quest.html",
+    says:"A tiny RPG: walk the meadow, spin your sword at the slimes, and bring home all three gems.", tags:["RPG"] },
+  { icon:"🏓", bg:"linear-gradient(135deg,#0ea5e9,#1e40af)", name:"2 Player Pong", url:"sg-pong.html",
+    says:"Neon pong for two: arrows against W and S, spin off the paddles, first to 7 takes the match.", tags:["2 player"] }
+];
+var list = document.getElementById("list");
+function h(t, c, x){ var e = document.createElement(t); if (c) e.className = c; if (x != null) e.textContent = x; return e; }
+GAMES.forEach(function(g){
+  var a = h("a", "game"); a.href = g.url;
+  var i = h("span", "icon", g.icon); i.style.background = g.bg; a.appendChild(i);
+  var w = h("span"); w.appendChild(h("b", null, g.name)); w.appendChild(h("p", null, g.says));
+  var tags = h("span", "tags"); g.tags.forEach(function(t){ tags.appendChild(h("span", "tag", t)); });
+  w.appendChild(tags); a.appendChild(w); list.appendChild(a);
+});
+</script>
+</body>
+</html>
