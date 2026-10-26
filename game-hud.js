@@ -55,8 +55,8 @@
      a file next to this one. A root-relative path is deliberate: it lands
      on the right place whether the site is being served from
      silocell.github.io or from the custom domain, since the Launchpad sits
-     at /HEH-Homework/ under both. */
-  x.className = "x"; x.href = "/HEH-Homework/games.html"; x.textContent = "✕";
+     at https://civilinitiatives.org/ under both. */
+  x.className = "x"; x.href = "https://civilinitiatives.org/games.html"; x.textContent = "✕";
   x.setAttribute("aria-label", "Close and go back to the games");
   hud.appendChild(x);
   (document.body || document.documentElement).appendChild(hud);
