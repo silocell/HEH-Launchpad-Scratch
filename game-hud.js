@@ -58,6 +58,15 @@
      at https://civilinitiatives.org/ under both. */
   x.className = "x"; x.href = "https://civilinitiatives.org/games.html"; x.textContent = "✕";
   x.setAttribute("aria-label", "Close and go back to the games");
+  /* Inside another page (the doodles open Fruit Slash in a window): the ✕
+     asks that page to close the window, instead of loading a whole
+     Launchpad page inside the game. */
+  if (window.self !== window.top) {
+    x.addEventListener("click", function(e){
+      e.preventDefault();
+      try { window.parent.postMessage({ hl: "close-game" }, "*"); } catch (err) {}
+    });
+  }
   hud.appendChild(x);
   (document.body || document.documentElement).appendChild(hud);
 
@@ -101,4 +110,19 @@
     requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
+})();
+
+/* Pence: every 2 minutes of actually playing (the page in view), the
+   server pays 1-3p - at most 10p per game a day (earn.js). */
+(function(){
+  var id = (location.pathname.split("/").pop() || "sg-game").replace(/\.html$/, "");
+  var s = document.createElement("script");
+  s.src = "https://civilinitiatives.org/earn.js?b=20261028b";
+  document.head.appendChild(s);
+  var played = 0;
+  setInterval(function(){
+    if (document.hidden) return;
+    played += 10;
+    if (played >= 120) { played = 0; if (window.HEHEarn) HEHEarn.played(id, 0); }
+  }, 10000);
 })();
